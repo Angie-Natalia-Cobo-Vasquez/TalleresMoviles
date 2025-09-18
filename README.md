@@ -37,3 +37,12 @@ git checkout feature/taller1
 flutter pub get
 flutter run
 
+---
+
+## 📸 Evidencias de ejecución
+
+**Estado inicial:**
+![Captura de estado inicial](assets/capturas/Captura1.png)
+
+**Después de presionar el botón:**
+![Captura después de presionar botón](assets/capturas/Captura2.png)
