@@ -1,47 +1,73 @@
-# Taller 1 – Flutter + Widgets + Git Flow
-
-**Nombre completo:** Angie Natalia Cobo Vásquez  
-**Materia:** Desarrollo de aplicaciones móviles  
+# 📘 Catálogo Universitario  
+**Autora:** Angie Cobo  
 **Código:** 230222011  
-**Grupo:** 2  
 
 ---
 
-## 📝 Descripción
+## 📖 Descripción del Proyecto  
+Este proyecto es una aplicación móvil desarrollada en **Flutter**, cuyo propósito es simular un **catálogo universitario**. La app permite navegar entre diferentes categorías (Libros, Tecnología, Deportes), visualizar productos y acceder a una vista de detalles.  
 
-Este es el primer taller de la materia **Desarrollo de Aplicaciones Móviles**.  
-El objetivo fue crear una pantalla sencilla usando Flutter y poner en práctica conceptos como `StatefulWidget`, `setState()`, y algunos widgets adicionales.  
-Además, se trabajó bajo el flujo de control de versiones **GitFlow**, utilizando ramas para mantener organizado el desarrollo.
-
----
-
-## 🧪 Requisitos cumplidos
-
-- Pantalla con `AppBar` y título dinámico.  
-- Imagen cargada desde la red (`Image.network`).  
-- Imagen local (`Image.asset`).  
-- Botón que cambia el título usando `setState()` y muestra un `SnackBar`.  
-- Uso de widgets adicionales como `ListView` y `Container`.  
-- Diseño con `Column`, `Padding`, `SizedBox`, etc.  
-- Uso correcto de ramas: `feature/taller1`, `dev`, `main`.
+La aplicación está diseñada con un enfoque académico, utilizando widgets y rutas que reflejan conceptos de **navegación, parámetros y componentes reutilizables** en Flutter.  
 
 ---
 
-## 🚀 Pasos para ejecutar el proyecto
+## 🏗️ Arquitectura y Navegación  
 
-Clonar el repositorio, cambiar al proyecto, cambiar de rama, instalar dependencias y ejecutar la app:
+El proyecto utiliza **`go_router`** como gestor de rutas.  
 
-```bash
-git clone https://github.com/Angie-Natalia-Cobo-Vasquez/TalleresMoviles.git
-cd TalleresMoviles
-git checkout feature/taller1
-flutter pub get
-flutter run
-```
-## 📸 Evidencias de ejecución
+### Rutas principales:
+- `/` → Pantalla **Home** (bienvenida y acceso al catálogo).  
+- `/catalogo` → Pantalla **Catálogo Universitario**.  
+  - Soporta parámetro opcional `promo` (ejemplo: `/catalogo?promo=20%off`).  
+- `/ciclo-vida` → Pantalla de detalles de un producto.  
 
-**Estado inicial de la app:**  
-![Captura de estado inicial](assets/capturas/Captura1.png)
+### Flujo de navegación:
+1. El usuario inicia en la pantalla Home.  
+2. Puede abrir el menú lateral (**CustomDrawer**) y acceder al **Catálogo**.  
+3. Dentro del Catálogo:
+   - Existen 3 pestañas con categorías: **Libros**, **Tecnología**, **Deportes**.  
+   - Cada tarjeta (producto) abre una nueva pantalla con más detalles.  
+4. El botón **Volver al Home** y el ícono de retroceso aplican navegación inteligente (`pop` o `go('/')`).  
 
-**Después de presionar el botón (título cambiado + SnackBar):**  
-![Captura después de presionar botón](assets/capturas/Captura2.png)
+---
+
+## 🧩 Widgets Usados y Razones de Elección  
+
+- **`Scaffold`**: estructura principal de cada pantalla, con AppBar, Drawer y cuerpo.  
+- **`AppBar` + `TabBar`**: permiten navegar entre categorías del catálogo de forma clara y organizada.  
+- **`Drawer` (CustomDrawer)**: navegación lateral reutilizable en todas las pantallas.  
+- **`GridView.builder`**: muestra productos en formato de catálogo con dos columnas.  
+- **`Card` (CatalogCard)**: cada producto está encapsulado en un widget reutilizable con título, imagen y botón de detalles.  
+- **`Image.asset`**: carga imágenes locales desde `assets/images`.  
+- **`TextField`**: barra de búsqueda de productos en el catálogo (no funcional aún, pero muestra intención de filtrado).  
+- **`ElevatedButton.icon`**: botón estilizado para regresar al Home con ícono y texto.  
+- **`OutlinedButton`**: dentro de cada producto, usado para ver detalles, dando contraste con el Card.  
+- **`DefaultTabController` + `TabBarView`**: facilitan la organización de categorías en pestañas.  
+
+---
+
+## 🚀 Tecnologías Usadas  
+
+- **Flutter 3.x**  
+- **Dart**  
+- **go_router** (gestión de rutas declarativas)  
+- **Material Design Widgets**  
+
+---
+
+## 📷 Capturas de Pantalla  
+
+*(Aquí puedes añadir screenshots del Home y del Catálogo como evidencia de funcionamiento)*  
+
+---
+
+## ✅ Conclusión  
+
+Este proyecto demuestra el uso de:  
+- **Navegación declarativa con parámetros.**  
+- **Widgets reutilizables (CatalogCard, CustomDrawer).**  
+- **Buenas prácticas en organización de carpetas y assets.**  
+
+Es un ejemplo académico aplicando los fundamentos de Flutter para construir interfaces dinámicas, estructuradas y fáciles de mantener.  
+
+
