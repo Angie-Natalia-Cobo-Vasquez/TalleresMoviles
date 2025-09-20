@@ -12,8 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      title: 'Tienda de ropa',
+      title: 'Catálogo Universitario - Angie Cobo (230222011)',
       routerConfig: appRouter,
     );
   }

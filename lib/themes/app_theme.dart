@@ -6,7 +6,7 @@ class AppTheme {
   static ThemeData get darkTheme {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color.fromARGB(255, 245, 42, 167),
+        seedColor: const Color.fromARGB(255, 215, 29, 197),
         brightness: Brightness.dark, // Tema claro
       ),
       useMaterial3: true,
@@ -22,7 +22,7 @@ class AppTheme {
       ),
       drawerTheme: const DrawerThemeData(
         elevation: 0,
-        backgroundColor: Color.fromARGB(255, 116, 114, 115),
+        backgroundColor: Color.fromARGB(255, 32, 31, 32),
       ),
       textTheme: const TextTheme(
         bodyLarge: TextStyle(color: Color.fromARGB(221, 255, 255, 255)),

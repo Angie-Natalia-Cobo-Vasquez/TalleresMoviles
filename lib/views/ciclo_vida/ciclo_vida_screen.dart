@@ -89,7 +89,7 @@ class CicloVidaScreenState extends State<CicloVidaScreen> {
               icon: const Icon(Icons.arrow_back),
               label: const Text("Volver al Home"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: const Color.fromARGB(255, 165, 60, 191),
                 foregroundColor: Colors.white,
               ),
             ),
