@@ -57,17 +57,34 @@ El proyecto utiliza **`go_router`** como gestor de rutas.
 
 ## 📷 Capturas de Pantalla  
 
-*(Aquí puedes añadir screenshots del Home y del Catálogo como evidencia de funcionamiento)*  
+**🏠 Pantalla Home:**  
+![Pantalla Home](assets/capturas/Captura3.jpg)
+
+**📚 Pantalla Catálogo:**  
+![Pantalla Catálogo](assets/capturas/Captura4.jpg)
+
+**📄 Pantalla de Cursos:**  
+![Pantalla Cursos](assets/capturas/Captura5.jpg)
+
+**🖥️ Pantalla de Eventos:**  
+![Eventos](assets/capturas/Captura6.jpg)
+
+**🖥️ Pantalla de Ciclo de vida:**  
+![Ciclo de vida](assets/capturas/Captura7.jpg)
+
+**🖥️ Pantalla de perfil académico:**  
+![Perfil académico](assets/capturas/Captura8.jpg)
+
+**🖥️ Pantalla de menú lateral del catálogo universitario:**  
+![Perfil académico](assets/capturas/Captura9.jpg)
 
 ---
 
 ## ✅ Conclusión  
 
-Este proyecto demuestra el uso de:  
+En este proyecto implemento:  
 - **Navegación declarativa con parámetros.**  
-- **Widgets reutilizables (CatalogCard, CustomDrawer).**  
-- **Buenas prácticas en organización de carpetas y assets.**  
-
-Es un ejemplo académico aplicando los fundamentos de Flutter para construir interfaces dinámicas, estructuradas y fáciles de mantener.  
+- **Widgets reutilizables como: CatalogCard, CustomDrawer.**  
+- **La organización de carpetas y assets.**  
 
 

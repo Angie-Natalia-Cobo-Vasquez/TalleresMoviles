@@ -4,6 +4,8 @@ import 'package:talleresmoviles/views/ciclo_vida/ciclo_vida_screen.dart';
 import 'package:talleresmoviles/views/perfil/perfil_screen.dart';
 import 'package:talleresmoviles/views/perfil/perfil_detalle_screen.dart';
 import '../views/home/home_screen.dart';
+import 'package:talleresmoviles/views/cursos/cursos_screen.dart';
+import 'package:talleresmoviles/views/eventos/eventos_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
@@ -42,6 +44,20 @@ final GoRouter appRouter = GoRouter(
       path: '/catalogo',
       name: 'catalogo',
       builder: (context, state) => const CatalogoScreen(),
+    ),
+
+    // Cursos
+    GoRoute(
+      path: '/cursos',
+      name: 'cursos',
+      builder: (context, state) => const CursosScreen(),
+    ),
+
+    // Eventos
+    GoRoute(
+      path: '/eventos',
+      name: 'eventos',
+      builder: (context, state) => const EventosScreen(),
     ),
 
     // Ciclo de vida
