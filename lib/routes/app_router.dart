@@ -6,6 +6,9 @@ import 'package:talleresmoviles/views/perfil/perfil_detalle_screen.dart';
 import '../views/home/home_screen.dart';
 import 'package:talleresmoviles/views/cursos/cursos_screen.dart';
 import 'package:talleresmoviles/views/eventos/eventos_screen.dart';
+import 'package:talleresmoviles/views/future/future_screen.dart';
+import 'package:talleresmoviles/views/timer/timer_screen.dart';
+import 'package:talleresmoviles/views/isolate/isolate_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
@@ -70,6 +73,26 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/ciclo_vida',
       redirect: (context, state) => '/ciclo-vida',
+    ),
+        // Future Demo
+    GoRoute(
+      path: '/future',
+      name: 'future',
+      builder: (context, state) => const FutureScreen(),
+    ),
+
+    // Timer Demo
+    GoRoute(
+      path: '/timer',
+      name: 'timer',
+      builder: (context, state) => const TimerScreen(),
+    ),
+
+    // Isolate Demo
+    GoRoute(
+      path: '/isolate',
+      name: 'isolate',
+      builder: (context, state) => const IsolateScreen(),
     ),
   ],
 );

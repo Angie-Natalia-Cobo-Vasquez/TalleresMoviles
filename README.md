@@ -78,6 +78,24 @@ El proyecto utiliza **`go_router`** como gestor de rutas.
 **🖥️ Pantalla de menú lateral del catálogo universitario:**  
 ![Perfil académico](assets/capturas/Captura9.jpg)
 
+**🖥️ Pantalla de Carga del Future**  
+![Future](assets/capturas/Capturaf1.png)
+
+**🖥️ Pantalla del Resultado de Future**  
+![Future](assets/capturas/Capturaf2.png)
+
+**🖥️ Pantalla de Timer**  
+![Timer](assets/capturas/Capturat.png)
+
+**🖥️ Pantalla inicial de Isolate**
+![Future](assets/capturas/Capturai1.png)
+
+**🖥️ Pantalla durante el proceso de carga**
+![Future](assets/capturas/Capturai2.png)
+
+**🖥️ Pantalla con análisis completado**  
+![Future](assets/capturas/Capturai3.png)
+
 ---
 
 ## ✅ Conclusión  
@@ -87,4 +105,99 @@ En este proyecto implemento:
 - **Widgets reutilizables como: CatalogCard, CustomDrawer.**  
 - **La organización de carpetas y assets.**  
 
+---
+
+## ⚙️ Documentación Técnica: Manejo de Procesos Asíncronos  
+
+```dart
+// En esta sección se explica el uso de Future, async/await, Timer e Isolate
+// Estos permiten manejar tareas que tardan o requieren ejecución paralela
+// sin bloquear la interfaz de usuario.
+
+// 🧭 Future
+// Se utiliza cuando una tarea tarda un tiempo en completarse.
+// Ideal para operaciones que deben esperar, como peticiones a APIs o simulaciones.
+
+Future<String> cargarDatos() async {
+  await Future.delayed(Duration(seconds: 2)); // Simula una espera de 2 segundos
+  return "Datos cargados correctamente";
+}
+
+// ⚙️ async / await
+// 'async' marca una función como asíncrona.
+// 'await' pausa la ejecución hasta que el Future termine, sin congelar la app.
+
+void obtenerInformacion() async {
+  print("Cargando información...");
+  String resultado = await cargarDatos();
+  print(resultado);
+}
+
+// ⏰ Timer
+// Se usa para ejecutar algo después de cierto tiempo o repetidamente.
+// Ideal para cronómetros, animaciones o tareas periódicas.
+
+void iniciarCronometro() {
+  int segundos = 0;
+  Timer.periodic(Duration(seconds: 1), (timer) {
+    segundos++;
+    print("Tiempo transcurrido: $segundos segundos");
+
+    if (segundos == 5) {
+      timer.cancel(); // Detiene el cronómetro
+      print("Cronómetro detenido.");
+    }
+  });
+}
+
+// 🧵 Isolate
+// Se usa para tareas muy pesadas que podrían trabar la interfaz.
+// Permite ejecutar el código en un hilo separado.
+
+import 'dart:isolate';
+
+void procesoPesado(SendPort sendPort) {
+  int resultado = 0;
+  for (int i = 0; i < 100000000; i++) {
+    resultado += i;
+  }
+  sendPort.send(resultado);
+}
+
+void ejecutarIsolate() async {
+  ReceivePort receivePort = ReceivePort();
+  await Isolate.spawn(procesoPesado, receivePort.sendPort);
+
+  receivePort.listen((mensaje) {
+    print("Resultado del proceso pesado: $mensaje");
+  });
+}
+
+```plaintext
+🗺️ DIAGRAMA / LISTA DE PANTALLAS Y FLUJOS
+
+Pantalla Home
+   │
+   ├──> Menú Lateral (CustomDrawer)
+   │        ├──> Catálogo Universitario
+   │        │       ├──> Libros
+   │        │       ├──> Tecnología
+   │        │       └──> Deportes
+   │        │
+   │        └──> Ciclo de Vida (cronómetro y proceso pesado)
+   │
+   └──> Perfil Académico / Cursos / Eventos
+
+
+FLUJO DEL CRONÓMETRO Y PROCESO PESADO
+
+Usuario entra a "Ciclo de Vida"
+       ↓
+Se inicia un Timer → cuenta segundos (cronómetro)
+       ↓
+Se ejecuta un Future con async/await para simular carga
+       ↓
+Si la tarea es pesada → se ejecuta con un Isolate
+       ↓
+Al terminar → se muestra el resultado o mensaje en pantalla
 
