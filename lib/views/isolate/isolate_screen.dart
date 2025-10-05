@@ -15,11 +15,15 @@ class _IsolateScreenState extends State<IsolateScreen> {
 
   // Simulación de una tarea pesada (ejemplo académico)
   static void heavyTask(SendPort sendPort) {
+    sendPort.send("Isolate iniciado"); // Mensaje inicial
     int sum = 0;
     for (int i = 0; i < 500000000; i++) {
       sum += i;
+      if (i % 100000000 == 0) {
+        sendPort.send("Progreso: $i"); // Mensajes de progreso
+      }
     }
-    sendPort.send(sum);
+    sendPort.send(sum); // Resultado final
   }
 
   void _runIsolate() async {
@@ -32,11 +36,17 @@ class _IsolateScreenState extends State<IsolateScreen> {
     await Isolate.spawn(heavyTask, receivePort.sendPort);
 
     receivePort.listen((message) {
+      // Mostramos todo mensaje que venga del Isolate
+      print("Mensaje del Isolate: $message"); // Consola / Logcat
       setState(() {
-        _isRunning = false;
-        _result = "Análisis completado correctamente 🎓";
+        // Actualizamos UI solo al final
+        if (message is int) {
+          _isRunning = false;
+          _result = "Análisis completado correctamente 🎓";
+        }
       });
-      receivePort.close();
+      // Cerramos el puerto solo si el mensaje es el final
+      if (message is int) receivePort.close();
     });
   }
 
@@ -67,8 +77,11 @@ class _IsolateScreenState extends State<IsolateScreen> {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        const Icon(Icons.analytics,
-                            color: Color(0xFFA53CBF), size: 50),
+                        const Icon(
+                          Icons.analytics,
+                          color: Color(0xFFA53CBF),
+                          size: 50,
+                        ),
                         const SizedBox(height: 10),
                         const Text(
                           "Análisis de Rendimiento Académico",
@@ -83,7 +96,9 @@ class _IsolateScreenState extends State<IsolateScreen> {
                         Text(
                           _result,
                           style: const TextStyle(
-                              fontSize: 16, color: Colors.white70),
+                            fontSize: 16,
+                            color: Colors.white70,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 15),
@@ -96,11 +111,14 @@ class _IsolateScreenState extends State<IsolateScreen> {
                                 icon: const Icon(Icons.play_arrow),
                                 label: const Text("Iniciar Análisis Pesado"),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      const Color(0xFFA53CBF), // Morado
+                                  backgroundColor: const Color(
+                                    0xFFA53CBF,
+                                  ), // Morado
                                   foregroundColor: Colors.white,
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 25, vertical: 15),
+                                    horizontal: 25,
+                                    vertical: 15,
+                                  ),
                                 ),
                               ),
                       ],
@@ -128,21 +146,25 @@ class _IsolateScreenState extends State<IsolateScreen> {
                         runSpacing: 15,
                         children: const [
                           _ResultCard(
-                              icon: Icons.school,
-                              label: "Cursos Evaluados",
-                              value: "12"),
+                            icon: Icons.school,
+                            label: "Cursos Evaluados",
+                            value: "12",
+                          ),
                           _ResultCard(
-                              icon: Icons.star,
-                              label: "Promedio General",
-                              value: "4.3"),
+                            icon: Icons.star,
+                            label: "Promedio General",
+                            value: "4.3",
+                          ),
                           _ResultCard(
-                              icon: Icons.access_time,
-                              label: "Tiempo de Cálculo",
-                              value: "2.1 s"),
+                            icon: Icons.access_time,
+                            label: "Tiempo de Cálculo",
+                            value: "2.1 s",
+                          ),
                           _ResultCard(
-                              icon: Icons.check_circle,
-                              label: "Procesos Exitosos",
-                              value: "100%"),
+                            icon: Icons.check_circle,
+                            label: "Procesos Exitosos",
+                            value: "100%",
+                          ),
                         ],
                       ),
                     ],
@@ -161,7 +183,9 @@ class _IsolateScreenState extends State<IsolateScreen> {
                     backgroundColor: const Color(0xFFA53CBF),
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 15),
+                      horizontal: 30,
+                      vertical: 15,
+                    ),
                     textStyle: const TextStyle(fontSize: 16),
                   ),
                 ),
@@ -180,8 +204,12 @@ class _ResultCard extends StatelessWidget {
   final String label;
   final String value;
 
-  const _ResultCard(
-      {required this.icon, required this.label, required this.value, super.key});
+  const _ResultCard({
+    required this.icon,
+    required this.label,
+    required this.value,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
