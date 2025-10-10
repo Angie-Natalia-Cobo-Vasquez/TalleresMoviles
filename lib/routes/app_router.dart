@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:talleresmoviles/models/cat_item_model.dart';
 import 'package:talleresmoviles/views/catalogo/catalogo_screen.dart';
 import 'package:talleresmoviles/views/ciclo_vida/ciclo_vida_screen.dart';
 import 'package:talleresmoviles/views/perfil/perfil_screen.dart';
@@ -9,6 +12,8 @@ import 'package:talleresmoviles/views/eventos/eventos_screen.dart';
 import 'package:talleresmoviles/views/future/future_screen.dart';
 import 'package:talleresmoviles/views/timer/timer_screen.dart';
 import 'package:talleresmoviles/views/isolate/isolate_screen.dart';
+import 'package:talleresmoviles/views/cat/cat_list_screen.dart';
+import 'package:talleresmoviles/views/cat/cat_detail_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
@@ -70,11 +75,8 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const CicloVidaScreen(),
     ),
 
-    GoRoute(
-      path: '/ciclo_vida',
-      redirect: (context, state) => '/ciclo-vida',
-    ),
-        // Future Demo
+    GoRoute(path: '/ciclo_vida', redirect: (context, state) => '/ciclo-vida'),
+    // Future Demo
     GoRoute(
       path: '/future',
       name: 'future',
@@ -93,6 +95,26 @@ final GoRouter appRouter = GoRouter(
       path: '/isolate',
       name: 'isolate',
       builder: (context, state) => const IsolateScreen(),
+    ),
+    // Razas de gatos (API HTTP)
+    // ...
+    GoRoute(
+      path: '/cat',
+      name: 'catList',
+      builder: (context, state) => const CatListScreen(),
+    ),
+    GoRoute(
+      path: '/cat/detail',
+      name: 'catDetail',
+      builder: (context, state) {
+        final extra = state.extra;
+        if (extra is CatItem) {
+          return CatDetailScreen(cat: extra);
+        }
+        return const Scaffold(
+          body: Center(child: Text('No se pudo cargar el detalle del gato')),
+        );
+      },
     ),
   ],
 );
