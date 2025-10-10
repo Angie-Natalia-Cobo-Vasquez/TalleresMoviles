@@ -84,7 +84,7 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
 
-           // FUTURE / ASYNC AWAIT
+          // FUTURE / ASYNC AWAIT
           ListTile(
             leading: const Icon(Icons.cloud),
             title: const Text('Future / Async Await'),
@@ -110,6 +110,15 @@ class CustomDrawer extends StatelessWidget {
             title: const Text('Isolate'),
             onTap: () {
               context.go('/isolate');
+              Navigator.pop(context);
+            },
+          ),
+
+          ListTile(
+            leading: const Icon(Icons.pets),
+            title: const Text('Consumo de API (HTTP)'),
+            onTap: () {
+              context.go('/cat');
               Navigator.pop(context);
             },
           ),
