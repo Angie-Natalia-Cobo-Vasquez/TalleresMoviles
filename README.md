@@ -137,8 +137,6 @@ class CatItem {
 ![Captura 5](assets/capturas/Capturag5.png)
 ![Captura 6](assets/capturas/Capturag6.png)
 
-> ⚠️ Asegúrate de que las imágenes estén dentro de la carpeta `assets/capturas/` en tu repositorio para que se muestren correctamente en GitHub.
-
 ---
 
 ## ✅ Conclusión
