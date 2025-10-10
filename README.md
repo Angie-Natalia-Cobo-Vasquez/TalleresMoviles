@@ -1,203 +1,145 @@
-# 📘 Catálogo Universitario  
-**Autora:** Angie Cobo  
+# 🐾 Catálogo Universitario - Módulo HTTP y APIs
+
+**Autora:** Angie Natalia Cobo Vásquez  
 **Código:** 230222011  
+**Repositorio:** [https://github.com/Angie-Natalia-Cobo-Vasquez/TalleresMoviles](https://github.com/Angie-Natalia-Cobo-Vasquez/TalleresMoviles)
 
 ---
 
-## 📖 Descripción del Proyecto  
-Este proyecto es una aplicación móvil desarrollada en **Flutter**, cuyo propósito es simular un **catálogo universitario**. La app permite navegar entre diferentes categorías (Libros, Tecnología, Deportes), visualizar productos y acceder a una vista de detalles.  
-
-La aplicación está diseñada con un enfoque académico, utilizando widgets y rutas que reflejan conceptos de **navegación, parámetros y componentes reutilizables** en Flutter.  
+## 🚀 Módulo: Consumo de API HTTP
 
 ---
 
-## 🏗️ Arquitectura y Navegación  
+## 📱 Funcionalidades Implementadas
 
-El proyecto utiliza **`go_router`** como gestor de rutas.  
-
-### Rutas principales:
-- `/` → Pantalla **Home** (bienvenida y acceso al catálogo).  
-- `/catalogo` → Pantalla **Catálogo Universitario**.  
-  - Soporta parámetro opcional `promo` (ejemplo: `/catalogo?promo=20%off`).  
-- `/ciclo-vida` → Pantalla de detalles de un producto.  
-
-### Flujo de navegación:
-1. El usuario inicia en la pantalla Home.  
-2. Puede abrir el menú lateral (**CustomDrawer**) y acceder al **Catálogo**.  
-3. Dentro del Catálogo:
-   - Existen 3 pestañas con categorías: **Libros**, **Tecnología**, **Deportes**.  
-   - Cada tarjeta (producto) abre una nueva pantalla con más detalles.  
-4. El botón **Volver al Home** y el ícono de retroceso aplican navegación inteligente (`pop` o `go('/')`).  
+### 1️⃣ Pantalla Principal - Listado de Gatos
+- Realiza petición **GET** a [TheCatAPI](https://thecatapi.com)
+- Renderiza resultados con **`GridView.builder`**
+- Muestra imágenes y nombres de razas de gatos
+- Estados de interfaz:
+  - ⏳ **Cargando**
+  - ✅ **Éxito**
+  - ❌ **Error**
 
 ---
 
-## 🧩 Widgets Usados y Razones de Elección  
-
-- **`Scaffold`**: estructura principal de cada pantalla, con AppBar, Drawer y cuerpo.  
-- **`AppBar` + `TabBar`**: permiten navegar entre categorías del catálogo de forma clara y organizada.  
-- **`Drawer` (CustomDrawer)**: navegación lateral reutilizable en todas las pantallas.  
-- **`GridView.builder`**: muestra productos en formato de catálogo con dos columnas.  
-- **`Card` (CatalogCard)**: cada producto está encapsulado en un widget reutilizable con título, imagen y botón de detalles.  
-- **`Image.asset`**: carga imágenes locales desde `assets/images`.  
-- **`TextField`**: barra de búsqueda de productos en el catálogo (no funcional aún, pero muestra intención de filtrado).  
-- **`ElevatedButton.icon`**: botón estilizado para regresar al Home con ícono y texto.  
-- **`OutlinedButton`**: dentro de cada producto, usado para ver detalles, dando contraste con el Card.  
-- **`DefaultTabController` + `TabBarView`**: facilitan la organización de categorías en pestañas.  
+### 2️⃣ Navegación con GoRouter
+- Ruta `/cat` → **Listado de gatos**
+- Ruta `/cat/detail` → **Pantalla de detalle**
+- Paso de parámetros mediante `state.extra`
+- Navegación fluida con **animaciones Hero**
 
 ---
 
-## 🚀 Tecnologías Usadas  
+## 🌐 API Utilizada
 
-- **Flutter 3.x**  
-- **Dart**  
-- **go_router** (gestión de rutas declarativas)  
-- **Material Design Widgets**  
+**TheCatAPI** — Servicio público para obtener imágenes e información de razas de gatos.  
 
----
+📍 **Endpoint principal:**  
+`https://api.thecatapi.com/v1/images/search?limit=20`
 
-## 📷 Capturas de Pantalla  
-
-**🏠 Pantalla Home:**  
-![Pantalla Home](assets/capturas/Captura3.jpg)
-
-**📚 Pantalla Catálogo:**  
-![Pantalla Catálogo](assets/capturas/Captura4.jpg)
-
-**📄 Pantalla de Cursos:**  
-![Pantalla Cursos](assets/capturas/Captura5.jpg)
-
-**🖥️ Pantalla de Eventos:**  
-![Eventos](assets/capturas/Captura6.jpg)
-
-**🖥️ Pantalla de Ciclo de vida:**  
-![Ciclo de vida](assets/capturas/Captura7.jpg)
-
-**🖥️ Pantalla de perfil académico:**  
-![Perfil académico](assets/capturas/Captura8.jpg)
-
-**🖥️ Pantalla de menú lateral del catálogo universitario:**  
-![Perfil académico](assets/capturas/Captura9.jpg)
-
-**🖥️ Pantalla de Carga del Future**  
-![Future](assets/capturas/Capturaf1.png)
-
-**🖥️ Pantalla del Resultado de Future**  
-![Future](assets/capturas/Capturaf2.png)
-
-**🖥️ Pantalla de Timer**  
-![Timer](assets/capturas/Capturat.png)
-
-**🖥️ Pantalla inicial de Isolate**
-![Future](assets/capturas/Capturai1.png)
-
-**🖥️ Pantalla durante el proceso de carga**
-![Future](assets/capturas/Capturai2.png)
-
-**🖥️ Pantalla con análisis completado**  
-![Future](assets/capturas/Capturai3.png)
-
----
-
-## ✅ Conclusión  
-
-En este proyecto implemento:  
-- **Navegación declarativa con parámetros.**  
-- **Widgets reutilizables como: CatalogCard, CustomDrawer.**  
-- **La organización de carpetas y assets.**  
-
----
-
-## ⚙️ Documentación Técnica: Manejo de Procesos Asíncronos  
-
-```dart
-// En esta sección se explica el uso de Future, async/await, Timer e Isolate
-// Estos permiten manejar tareas que tardan o requieren ejecución paralela
-// sin bloquear la interfaz de usuario.
-
-// 🧭 Future
-// Se utiliza cuando una tarea tarda un tiempo en completarse.
-// Ideal para operaciones que deben esperar, como peticiones a APIs o simulaciones.
-
-Future<String> cargarDatos() async {
-  await Future.delayed(Duration(seconds: 2)); // Simula una espera de 2 segundos
-  return "Datos cargados correctamente";
-}
-
-// ⚙️ async / await
-// 'async' marca una función como asíncrona.
-// 'await' pausa la ejecución hasta que el Future termine, sin congelar la app.
-
-void obtenerInformacion() async {
-  print("Cargando información...");
-  String resultado = await cargarDatos();
-  print(resultado);
-}
-
-// ⏰ Timer
-// Se usa para ejecutar algo después de cierto tiempo o repetidamente.
-// Ideal para cronómetros, animaciones o tareas periódicas.
-
-void iniciarCronometro() {
-  int segundos = 0;
-  Timer.periodic(Duration(seconds: 1), (timer) {
-    segundos++;
-    print("Tiempo transcurrido: $segundos segundos");
-
-    if (segundos == 5) {
-      timer.cancel(); // Detiene el cronómetro
-      print("Cronómetro detenido.");
-    }
-  });
-}
-
-// 🧵 Isolate
-// Se usa para tareas muy pesadas que podrían trabar la interfaz.
-// Permite ejecutar el código en un hilo separado.
-
-import 'dart:isolate';
-
-void procesoPesado(SendPort sendPort) {
-  int resultado = 0;
-  for (int i = 0; i < 100000000; i++) {
-    resultado += i;
+📦 **Ejemplo de respuesta JSON:**
+```json
+[
+  {
+    "id": "MTY3ODIyMQ",
+    "url": "https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg",
+    "breeds": [
+      {
+        "name": "Abyssinian"
+      }
+    ]
   }
-  sendPort.send(resultado);
-}
+]
+```
 
-void ejecutarIsolate() async {
-  ReceivePort receivePort = ReceivePort();
-  await Isolate.spawn(procesoPesado, receivePort.sendPort);
+---
 
-  receivePort.listen((mensaje) {
-    print("Resultado del proceso pesado: $mensaje");
-  });
-}
+## 🏗️ Arquitectura del Proyecto
 
 ```plaintext
-🗺️ DIAGRAMA / LISTA DE PANTALLAS Y FLUJOS
+lib/
+├── models/
+│   ├── cat_item_model.dart    # Modelo para items de gatos
+│   └── cat_model.dart         # Modelo para razas de gatos
+├── services/
+│   └── cat_service.dart       # Servicio para peticiones HTTP
+└── views/
+    └── cat/
+        ├── cat_list_screen.dart    # Pantalla de listado
+        └── cat_detail_screen.dart  # Pantalla de detalle
+```
 
-Pantalla Home
-   │
-   ├──> Menú Lateral (CustomDrawer)
-   │        ├──> Catálogo Universitario
-   │        │       ├──> Libros
-   │        │       ├──> Tecnología
-   │        │       └──> Deportes
-   │        │
-   │        └──> Ciclo de Vida (cronómetro y proceso pesado)
-   │
-   └──> Perfil Académico / Cursos / Eventos
+---
 
+## 🧩 Servicio HTTP y Modelo de Datos
 
-FLUJO DEL CRONÓMETRO Y PROCESO PESADO
+### 🧠 Archivo: `cat_service.dart`
 
-Usuario entra a "Ciclo de Vida"
-       ↓
-Se inicia un Timer → cuenta segundos (cronómetro)
-       ↓
-Se ejecuta un Future con async/await para simular carga
-       ↓
-Si la tarea es pesada → se ejecuta con un Isolate
-       ↓
-Al terminar → se muestra el resultado o mensaje en pantalla
+```dart
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../models/cat_item_model.dart';
 
+class CatService {
+  Future<List<CatItem>> fetchCatImages() async {
+    final url = Uri.parse('https://api.thecatapi.com/v1/images/search?limit=20');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List data = json.decode(response.body);
+      return data.map((json) => CatItem.fromJson(json)).toList();
+    } else {
+      throw Exception('Error al obtener las imágenes de gatos');
+    }
+  }
+}
+```
+
+---
+
+### 🐱 Archivo: `cat_item_model.dart`
+
+```dart
+class CatItem {
+  final String id;
+  final String imageUrl;
+  final String breedName;
+
+  CatItem({
+    required this.id,
+    required this.imageUrl,
+    required this.breedName,
+  });
+
+  factory CatItem.fromJson(Map<String, dynamic> json) {
+    return CatItem(
+      id: json['id'] ?? '',
+      imageUrl: json['url'] ?? '',
+      breedName: (json['breeds'] != null && json['breeds'].isNotEmpty)
+          ? json['breeds'][0]['name']
+          : 'Desconocido',
+    );
+  }
+}
+```
+
+---
+
+## 📸 Capturas del Proyecto
+
+### 🐾 Interfaz del Listado y Detalle de Gatos
+
+![Captura 1](assets/capturas/Capturag1.png)
+![Captura 2](assets/capturas/Capturag2.png)
+![Captura 3](assets/capturas/Capturag3.png)
+![Captura 4](assets/capturas/Capturag4.png)
+![Captura 5](assets/capturas/Capturag5.png)
+![Captura 6](assets/capturas/Capturag6.png)
+
+---
+
+## ✅ Conclusión
+
+Este módulo permitió implementar de manera práctica el **consumo de APIs en Flutter**, integrando desde la solicitud HTTP hasta la visualización de datos.  
+Se reforzaron conceptos clave como el **manejo de estados (cargando/éxito/error)**, la **navegación con GoRouter**, y la **estructuración modular del código (Service / Model / View)**, logrando una aplicación funcional y escalable.

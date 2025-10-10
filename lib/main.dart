@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:talleresmoviles/routes/app_router.dart';
-import 'themes/app_theme.dart'; 
+import 'themes/app_theme.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:talleresmoviles/views/cat/cat_list_screen.dart';
+import 'package:talleresmoviles/views/cat/cat_detail_screen.dart';
+
+
 
 void main() {
   runApp(const MyApp());
