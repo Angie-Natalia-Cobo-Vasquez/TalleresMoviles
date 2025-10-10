@@ -31,6 +31,30 @@
 
 ---
 
+## 🌐 API Utilizada
+
+**TheCatAPI** — Servicio público para obtener imágenes e información de razas de gatos.  
+
+📍 **Endpoint principal:**  
+`https://api.thecatapi.com/v1/images/search?limit=20`
+
+📦 **Ejemplo de respuesta JSON:**
+```json
+[
+  {
+    "id": "MTY3ODIyMQ",
+    "url": "https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg",
+    "breeds": [
+      {
+        "name": "Abyssinian"
+      }
+    ]
+  }
+]
+```
+
+---
+
 ## 🏗️ Arquitectura del Proyecto
 
 ```plaintext
@@ -112,3 +136,12 @@ class CatItem {
 ![Captura 4](assets/capturas/Capturag4.png)
 ![Captura 5](assets/capturas/Capturag5.png)
 ![Captura 6](assets/capturas/Capturag6.png)
+
+> ⚠️ Asegúrate de que las imágenes estén dentro de la carpeta `assets/capturas/` en tu repositorio para que se muestren correctamente en GitHub.
+
+---
+
+## ✅ Conclusión
+
+Este módulo permitió implementar de manera práctica el **consumo de APIs en Flutter**, integrando desde la solicitud HTTP hasta la visualización de datos.  
+Se reforzaron conceptos clave como el **manejo de estados (cargando/éxito/error)**, la **navegación con GoRouter**, y la **estructuración modular del código (Service / Model / View)**, logrando una aplicación funcional y escalable.
