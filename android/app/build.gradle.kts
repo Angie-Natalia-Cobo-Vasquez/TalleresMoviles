@@ -28,7 +28,7 @@ android {
 
         // Versionado semántico
         versionCode = 1000001
-        versionName = "1.0.0"
+        versionName = "1.0.1"
     }
 
     buildTypes {
