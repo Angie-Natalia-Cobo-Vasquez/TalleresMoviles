@@ -68,6 +68,25 @@ class HomeScreen extends StatelessWidget {
                 context.replace('/catalogo?promo=ConReplace');
               },
             ),
+
+            const SizedBox(height: 40),
+
+            // 👇 Nueva sección: muestra la versión actual con ícono
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.info_outline, color: Colors.grey),
+                SizedBox(width: 8),
+                Text(
+                  'Versión 1.0.1',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
