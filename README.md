@@ -1,145 +1,180 @@
-# 🐾 Catálogo Universitario - Módulo HTTP y APIs
+# 🐾 Catálogo Universitario - Distribución y Versionado de App Flutter 
 
 **Autora:** Angie Natalia Cobo Vásquez  
 **Código:** 230222011  
-**Repositorio:** [https://github.com/Angie-Natalia-Cobo-Vasquez/TalleresMoviles](https://github.com/Angie-Natalia-Cobo-Vasquez/TalleresMoviles)
+**Repositorio:** [https://github.com/Angie-Natalia-Cobo-Vasquez/TalleresMoviles](https://github.com/Angie-Natalia-Cobo-Vasquez/TalleresMoviles)  
+**Materia:** Desarrollo Móvil - 7° Semestre  
+**Institución:** Unidad Central del Valle (UCEVA)  
+**📅 Fecha:** Octubre 2025  
 
 ---
 
-## 🚀 Módulo: Consumo de API HTTP
+## 🚀 Módulo: Distribución de Aplicaciones Flutter con Firebase App Distribution
+
+Este módulo corresponde a la **versión 1.0.1** del proyecto, enfocada en el proceso de **generación, distribución y versionado** de la aplicación móvil, aplicando buenas prácticas con **Semantic Versioning** y **Firebase App Distribution**.
 
 ---
 
-## 📱 Funcionalidades Implementadas
+## 📦 Flujo de Distribución
 
-### 1️⃣ Pantalla Principal - Listado de Gatos
-- Realiza petición **GET** a [TheCatAPI](https://thecatapi.com)
-- Renderiza resultados con **`GridView.builder`**
-- Muestra imágenes y nombres de razas de gatos
-- Estados de interfaz:
-  - ⏳ **Cargando**
-  - ✅ **Éxito**
-  - ❌ **Error**
+🏗️ Build → 🚀 Distribución en Firebase → 👥 Testers → 📲 Instalación → 🔄 Actualización
 
----
-
-### 2️⃣ Navegación con GoRouter
-- Ruta `/cat` → **Listado de gatos**
-- Ruta `/cat/detail` → **Pantalla de detalle**
-- Paso de parámetros mediante `state.extra`
-- Navegación fluida con **animaciones Hero**
+### **1️⃣ Generar APK**
+```bash
+flutter build apk --release
+```
+📍 **Ruta del archivo generado:**  
+`build/app/outputs/flutter-apk/app-release.apk`
 
 ---
 
-## 🌐 API Utilizada
+### **2️⃣ Distribución en Firebase**
+1. Ingresar a [Firebase Console](https://console.firebase.google.com/)  
+2. Seleccionar el proyecto vinculado  
+3. Acceder a **App Distribution**  
+4. Subir `app-release.apk`  
+5. Añadir notas de lanzamiento  
+6. Invitar testers vía correo  
 
-**TheCatAPI** — Servicio público para obtener imágenes e información de razas de gatos.  
+🧪 **Los testers reciben:**
+- Correo con invitación desde Firebase  
+- Link directo para descargar la app  
+- Instrucciones de instalación  
 
-📍 **Endpoint principal:**  
-`https://api.thecatapi.com/v1/images/search?limit=20`
+---
 
-📦 **Ejemplo de respuesta JSON:**
-```json
-[
-  {
-    "id": "MTY3ODIyMQ",
-    "url": "https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg",
-    "breeds": [
-      {
-        "name": "Abyssinian"
-      }
-    ]
-  }
-]
+## ⚙️ Configuración Android para Distribución
+
+### 1. **Permisos en `AndroidManifest.xml`**
+```xml
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
 ```
 
 ---
 
-## 🏗️ Arquitectura del Proyecto
+### 2. **Logo de la Aplicación**
+Logo generado en 5 resoluciones:
 
-```plaintext
+- `mipmap-mdpi/ic_launcher.png` (48x48px)  
+- `mipmap-hdpi/ic_launcher.png` (72x72px)  
+- `mipmap-xhdpi/ic_launcher.png` (96x96px)  
+- `mipmap-xxhdpi/ic_launcher.png` (144x144px)  
+- `mipmap-xxxhdpi/ic_launcher.png` (192x192px)
+
+---
+
+### 3. **Configuración Firebase**
+
+**Archivo:** `android/build.gradle.kts`
+```kotlin
+plugins {
+    id("com.google.gms.google-services") version "4.4.4" apply false
+}
+```
+
+**Archivo:** `android/app/build.gradle.kts`
+```kotlin
+plugins {
+    id("com.google.gms.google-services")
+}
+```
+
+📍 **Archivo `google-services.json` ubicado en:**  
+`android/app/` *(nivel general del proyecto)*
+
+---
+
+## 🧩 Versionado Semántico
+
+Formato:
+```
+MAJOR.MINOR.PATCH
+```
+Ejemplo: **1.0.1**  
+- **MAJOR** → Cambios incompatibles  
+- **MINOR** → Nuevas funciones  
+- **PATCH** → Correcciones o mejoras menores  
+
+### Configuración en `build.gradle.kts`
+```kotlin
+defaultConfig {
+    applicationId = "com.example.catalogo_universitario"
+    versionCode = 1000002
+    versionName = "1.0.1"
+}
+```
+
+---
+
+## 📝 Release Notes – v1.0.1
+
+### ✨ Novedades
+- 🔧 Configuración de **Firebase App Distribution**
+- 🧱 Generación de **APK en modo Release**
+- 📦 Implementación de **versionado semántico**
+- 🧪 Pruebas de instalación en dispositivo físico exitosas
+
+### 🐛 Correcciones
+- Ajustes en dependencias y estructura del proyecto  
+- Optimización del tamaño de build  
+
+### ✅ Estado
+- **Versión probada y funcional**  
+- **Distribución completada en Firebase App Distribution**  
+
+---
+
+## ✅ Checklist de Revisión antes del Release
+- [x] `versionCode` y `versionName` actualizados  
+- [x] APK generado en modo `--release`  
+- [x] Firebase configurado correctamente  
+- [x] App instalada y probada en Android físico  
+- [x] README actualizado con versión y proceso  
+
+---
+
+## 📊 Arquitectura del Proyecto
+
+```
 lib/
 ├── models/
-│   ├── cat_item_model.dart    # Modelo para items de gatos
-│   └── cat_model.dart         # Modelo para razas de gatos
 ├── services/
-│   └── cat_service.dart       # Servicio para peticiones HTTP
-└── views/
-    └── cat/
-        ├── cat_list_screen.dart    # Pantalla de listado
-        └── cat_detail_screen.dart  # Pantalla de detalle
+├── views/
+└── main.dart
 ```
+
+### 🔍 Tecnologías Utilizadas
+- **Flutter SDK:** 3.10.0+  
+- **Dart:** 3.10.0+  
+- **Firebase App Distribution**  
+- **Material Design 3**  
+- **HTTP Package**  
+- **GoRouter**  
 
 ---
-
-## 🧩 Servicio HTTP y Modelo de Datos
-
-### 🧠 Archivo: `cat_service.dart`
-
-```dart
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import '../models/cat_item_model.dart';
-
-class CatService {
-  Future<List<CatItem>> fetchCatImages() async {
-    final url = Uri.parse('https://api.thecatapi.com/v1/images/search?limit=20');
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      final List data = json.decode(response.body);
-      return data.map((json) => CatItem.fromJson(json)).toList();
-    } else {
-      throw Exception('Error al obtener las imágenes de gatos');
-    }
-  }
-}
-```
-
----
-
-### 🐱 Archivo: `cat_item_model.dart`
-
-```dart
-class CatItem {
-  final String id;
-  final String imageUrl;
-  final String breedName;
-
-  CatItem({
-    required this.id,
-    required this.imageUrl,
-    required this.breedName,
-  });
-
-  factory CatItem.fromJson(Map<String, dynamic> json) {
-    return CatItem(
-      id: json['id'] ?? '',
-      imageUrl: json['url'] ?? '',
-      breedName: (json['breeds'] != null && json['breeds'].isNotEmpty)
-          ? json['breeds'][0]['name']
-          : 'Desconocido',
-    );
-  }
-}
-```
 
 ---
 
 ## 📸 Capturas del Proyecto
 
-### 🐾 Interfaz del Listado y Detalle de Gatos
+### Versiones
 
-![Captura 1](assets/capturas/Capturag1.png)
-![Captura 2](assets/capturas/Capturag2.png)
-![Captura 3](assets/capturas/Capturag3.png)
-![Captura 4](assets/capturas/Capturag4.png)
-![Captura 5](assets/capturas/Capturag5.png)
-![Captura 6](assets/capturas/Capturag6.png)
+![Versión 1.0.0](assets/capturas/Capturav1.jpg)
+![Versión 1.0.1](assets/capturas/Capturav2.jpg)
 
 ---
 
-## ✅ Conclusión
+## 🧠 Conclusión
 
-Este módulo permitió implementar de manera práctica el **consumo de APIs en Flutter**, integrando desde la solicitud HTTP hasta la visualización de datos.  
-Se reforzaron conceptos clave como el **manejo de estados (cargando/éxito/error)**, la **navegación con GoRouter**, y la **estructuración modular del código (Service / Model / View)**, logrando una aplicación funcional y escalable.
+Con esta versión, se logró dominar el proceso completo de **construcción, empaquetado y distribución** de aplicaciones Flutter a través de **Firebase App Distribution**, consolidando conocimientos sobre control de versiones, publicación y pruebas en entorno real.
+
+---
+
+## 📦 Versión Actual
+**Versión:** `1.0.1`  
+**Build:** `1000002`  
+**Estado:** ✅ Distribuida exitosamente  
+**Última actualización:** Octubre 2025
