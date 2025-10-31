@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://parking.visiontic.com.co",
+    "changeOrigin": true,
+    "secure": true
+  }
+}

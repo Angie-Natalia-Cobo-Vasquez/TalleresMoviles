@@ -1,4 +1,4 @@
-# 🐾 Catálogo Universitario - Distribución y Versionado de App Flutter 
+# 🔐 Taller 2 – Autenticación JWT en Flutter
 
 **Autora:** Angie Natalia Cobo Vásquez  
 **Código:** 230222011  
@@ -9,152 +9,163 @@
 
 ---
 
-## 🚀 Módulo: Distribución de Aplicaciones Flutter con Firebase App Distribution
+## 🚀 Módulo: Autenticación JWT con Manejo de Estado y Almacenamiento Seguro
 
-Este módulo corresponde a la **versión 1.0.1** del proyecto, enfocada en el proceso de **generación, distribución y versionado** de la aplicación móvil, aplicando buenas prácticas con **Semantic Versioning** y **Firebase App Distribution**.
-
----
-
-## 📦 Flujo de Distribución
-
-🏗️ Build → 🚀 Distribución en Firebase → 👥 Testers → 📲 Instalación → 🔄 Actualización
-
-### **1️⃣ Generar APK**
-```bash
-flutter build apk --release
-```
-📍 **Ruta del archivo generado:**  
-`build/app/outputs/flutter-apk/app-release.apk`
+Este taller corresponde al **Taller 2**, enfocado en la **implementación de autenticación JWT**, **manejo de estados**, **persistencia local** y **buenas prácticas de arquitectura en Flutter**.
 
 ---
 
-### **2️⃣ Distribución en Firebase**
-1. Ingresar a [Firebase Console](https://console.firebase.google.com/)  
-2. Seleccionar el proyecto vinculado  
-3. Acceder a **App Distribution**  
-4. Subir `app-release.apk`  
-5. Añadir notas de lanzamiento  
-6. Invitar testers vía correo  
+## 🎯 Objetivo del Taller
 
-🧪 **Los testers reciben:**
-- Correo con invitación desde Firebase  
-- Link directo para descargar la app  
-- Instrucciones de instalación  
+Desarrollar un módulo que permita:
+
+1. 🔑 **Realizar login JWT** contra un backend (propio o API pública).  
+2. ⚙️ Implementar **manejo de estados** (cargando / éxito / error).  
+3. 🧩 Aplicar **separación lógica por servicios** y buenas prácticas de arquitectura.  
+4. 💾 Guardar información de usuario en `shared_preferences` (no sensible).  
+5. 🔐 Guardar tokens JWT en `flutter_secure_storage` (información sensible).  
+6. 🖥️ Crear una vista de evidencia que muestre los datos almacenados localmente.
 
 ---
 
-## ⚙️ Configuración Android para Distribución
-
-### 1. **Permisos en `AndroidManifest.xml`**
-```xml
-<uses-permission android:name="android.permission.INTERNET"/>
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-```
-
----
-
-### 2. **Logo de la Aplicación**
-Logo generado en 5 resoluciones:
-
-- `mipmap-mdpi/ic_launcher.png` (48x48px)  
-- `mipmap-hdpi/ic_launcher.png` (72x72px)  
-- `mipmap-xhdpi/ic_launcher.png` (96x96px)  
-- `mipmap-xxhdpi/ic_launcher.png` (144x144px)  
-- `mipmap-xxxhdpi/ic_launcher.png` (192x192px)
-
----
-
-### 3. **Configuración Firebase**
-
-**Archivo:** `android/build.gradle.kts`
-```kotlin
-plugins {
-    id("com.google.gms.google-services") version "4.4.4" apply false
-}
-```
-
-**Archivo:** `android/app/build.gradle.kts`
-```kotlin
-plugins {
-    id("com.google.gms.google-services")
-}
-```
-
-📍 **Archivo `google-services.json` ubicado en:**  
-`android/app/` *(nivel general del proyecto)*
-
----
-
-## 🧩 Versionado Semántico
-
-Formato:
-```
-MAJOR.MINOR.PATCH
-```
-Ejemplo: **1.0.1**  
-- **MAJOR** → Cambios incompatibles  
-- **MINOR** → Nuevas funciones  
-- **PATCH** → Correcciones o mejoras menores  
-
-### Configuración en `build.gradle.kts`
-```kotlin
-defaultConfig {
-    applicationId = "com.example.catalogo_universitario"
-    versionCode = 1000002
-    versionName = "1.0.1"
-}
-```
-
----
-
-## 📝 Release Notes – v1.0.1
-
-### ✨ Novedades
-- 🔧 Configuración de **Firebase App Distribution**
-- 🧱 Generación de **APK en modo Release**
-- 📦 Implementación de **versionado semántico**
-- 🧪 Pruebas de instalación en dispositivo físico exitosas
-
-### 🐛 Correcciones
-- Ajustes en dependencias y estructura del proyecto  
-- Optimización del tamaño de build  
-
-### ✅ Estado
-- **Versión probada y funcional**  
-- **Distribución completada en Firebase App Distribution**  
-
----
-
-## ✅ Checklist de Revisión antes del Release
-- [x] `versionCode` y `versionName` actualizados  
-- [x] APK generado en modo `--release`  
-- [x] Firebase configurado correctamente  
-- [x] App instalada y probada en Android físico  
-- [x] README actualizado con versión y proceso  
-
----
-
-## 📊 Arquitectura del Proyecto
+## 🧱 Arquitectura y Flujo del Proyecto
 
 ```
 lib/
-├── models/
-├── services/
-├── views/
-└── main.dart
+├── models/                # Modelos de datos (Usuario, LoginResponse, etc.)
+├── services/              # Lógica de negocio y conexión API (AuthService, ApiClient)
+├── providers/             # Manejo de estado (Provider)
+├── views/                 # Vistas de UI (LoginScreen, EvidenciaScreen)
+└── main.dart              # Punto de entrada del proyecto
 ```
 
-### 🔍 Tecnologías Utilizadas
-- **Flutter SDK:** 3.10.0+  
-- **Dart:** 3.10.0+  
-- **Firebase App Distribution**  
-- **Material Design 3**  
-- **HTTP Package**  
-- **GoRouter**  
+---
+
+## 🔗 Autenticación JWT
+
+### ✅ Opción Implementada
+Se usó la **API pública de Parking Visiontic**, con los endpoints documentados en Swagger:
+
+📄 [https://parking.visiontic.com.co/api/documentation](https://parking.visiontic.com.co/api/documentation)
+
+**Endpoint principal (login):**
+```
+POST https://parking.visiontic.com.co/api/login
+```
+
+### 📥 Flujo del Login
+
+1. El usuario ingresa sus credenciales.  
+2. El sistema realiza la petición HTTP al endpoint de login.  
+3. La respuesta contiene un token JWT, almacenado de forma segura.  
+4. Se guarda información del usuario (nombre, correo) en `shared_preferences`.  
+5. Se redirige a la vista de evidencia con los datos persistidos.
 
 ---
+
+## 💾 Almacenamiento Local
+
+| Tipo | Herramienta | Datos | Descripción |
+|------|--------------|-------|--------------|
+| No sensible | shared_preferences | nombre, email, tema | Persistencia básica |
+| Sensible | flutter_secure_storage | access_token, refresh_token | Seguridad de credenciales |
+
+---
+
+## 🧩 Vista de Evidencia
+
+### Funcionalidades:
+- Mostrar nombre y correo (desde `shared_preferences`).  
+- Indicar si hay token almacenado (`flutter_secure_storage`).  
+- Botón **“Cerrar sesión”** que borra los datos guardados.  
+
+📸 **Capturas de evidencia** *(se agregarán posteriormente)*
+
+---
+
+## ⚙️ Flujo de Trabajo con GitFlow
+
+| Rama | Propósito |
+|------|------------|
+| `main` | Versión estable del proyecto |
+| `dev` | Rama base de desarrollo |
+| `feature/taller_jwt` | Implementación del taller JWT |
+
+### 🔄 Proceso
+1. Crear rama `feature/taller_jwt` desde `dev`.  
+2. Implementar autenticación JWT y vista de evidencia.  
+3. Abrir PR `feature/taller_jwt → dev`.  
+4. Revisar, aprobar y hacer merge a `dev` y luego a `main`.
+
+---
+
+## 🧠 Manejo de Estados
+
+Se implementó el patrón **Provider**, gestionando tres estados principales:
+
+- `loading`: cuando se realiza la petición al servidor  
+- `success`: cuando la autenticación es correcta  
+- `error`: cuando ocurre un fallo (credenciales o conexión)
+
+---
+
+## 🧾 Ejemplo de Configuración
+
+### Dependencias principales
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.1.0
+  provider: ^6.0.5
+  shared_preferences: ^2.2.2
+  flutter_secure_storage: ^9.0.0
+```
+
+### Lógica básica de login
+```dart
+final response = await http.post(
+  Uri.parse("https://parking.visiontic.com.co/api/login"),
+  body: {"email": email, "password": password},
+);
+```
+
+---
+
+## 🧪 Evidencias del Taller
+
+📄 Se entregó un **PDF** con capturas que muestran:
+- El consumo exitoso del endpoint de login.  
+- Los datos almacenados localmente (`shared_preferences` y `secure_storage`).  
+- La funcionalidad de cierre de sesión.  
+
+---
+
+## 🧱 Tecnologías Utilizadas
+- **Flutter SDK:** 3.10.0+  
+- **Dart:** 3.10.0+  
+- **Provider (estado)**  
+- **HTTP Package (API REST)**  
+- **shared_preferences / flutter_secure_storage**  
+- **Material Design 3**  
+
+---
+
+## 🧩 Release Notes – Taller JWT
+
+### ✨ Novedades
+- Implementación completa de autenticación JWT.  
+- Manejo de estado con Provider.  
+- Persistencia local de datos y tokens.  
+- Vista de evidencia funcional y validada.  
+
+### 🐛 Correcciones
+- Ajuste de dependencias y estructura modular del proyecto.  
+- Corrección en manejo de errores y estados del login.
+
+### ✅ Estado
+- **Versión probada y funcional.**  
+- **Cumple con los requisitos del Taller 2.**
 
 ---
 
@@ -162,19 +173,22 @@ lib/
 
 ### Versiones
 
-![Versión 1.0.0](assets/capturas/Capturav1.jpg)
-![Versión 1.0.1](assets/capturas/Capturav2.jpg)
-
+![Custom Drawer](assets/capturas/CapturaJ1.png)
+![Registro](assets/capturas/CapturaJ2.png)
+![Registro exitoso](assets/capturas/CapturaJ22.png)
+![Login](assets/capturas/CapturaJ3.png)
+![Evidencias](assets/capturas/CapturaJ5.png)
 ---
+
 
 ## 🧠 Conclusión
 
-Con esta versión, se logró dominar el proceso completo de **construcción, empaquetado y distribución** de aplicaciones Flutter a través de **Firebase App Distribution**, consolidando conocimientos sobre control de versiones, publicación y pruebas en entorno real.
+Con este taller se consolidaron los conocimientos sobre **autenticación JWT en Flutter**, **gestión de estado**, **seguridad local** y **flujo de trabajo con GitFlow**, aplicando prácticas de desarrollo profesional y distribución organizada del código.
 
 ---
 
 ## 📦 Versión Actual
-**Versión:** `1.0.1`  
-**Build:** `1000002`  
-**Estado:** ✅ Distribuida exitosamente  
+**Versión:** `2.0.0`  
+**Rama:** `feature/taller_jwt`  
+**Estado:** ✅ Finalizado y probado  
 **Última actualización:** Octubre 2025
