@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:talleresmoviles/routes/app_router.dart';
-import 'themes/app_theme.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:talleresmoviles/views/cat/cat_list_screen.dart';
-import 'package:talleresmoviles/views/cat/cat_detail_screen.dart';
+import 'package:talleresmoviles/themes/app_theme.dart';
+import 'package:talleresmoviles/providers/auth_provider.dart';
 
-
-
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Si en el futuro necesitas SharedPreferences al inicio, inicialízalas aquí.
   runApp(const MyApp());
 }
 
@@ -17,11 +15,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
-      title: 'Catálogo Universitario - Angie Cobo (230222011)',
-      routerConfig: appRouter,
+    return ChangeNotifierProvider<AuthProvider>(
+      // Se crea el provider aquí para que todo el árbol (incluido GoRouter/MaterialApp.router)
+      // pueda acceder a AuthProvider.
+      create: (_) {
+        final p = AuthProvider();
+        // lanzar la verificación inicial (no se espera)
+        p.checkLogin();
+        return p;
+      },
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.darkTheme,
+        title: 'Catálogo Universitario - Angie Cobo (230222011)',
+        routerConfig: appRouter,
+      ),
     );
   }
 }
+

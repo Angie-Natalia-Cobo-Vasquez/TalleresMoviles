@@ -122,8 +122,31 @@ class CustomDrawer extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
+
+          const Divider(),
+
+          // LOGIN
+          ListTile(
+            leading: const Icon(Icons.login),
+            title: const Text('Iniciar Sesión'),
+            onTap: () {
+              context.go('/login');
+              Navigator.pop(context);
+            },
+          ),
+
+          // REGISTER
+          ListTile(
+            leading: const Icon(Icons.app_registration),
+            title: const Text('Registrarse'),
+            onTap: () {
+              context.go('/register');
+              Navigator.pop(context);
+            },
+          ),
         ],
       ),
     );
   }
 }
+

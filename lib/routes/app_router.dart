@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:talleresmoviles/models/cat_item_model.dart';
+import 'package:talleresmoviles/screens/evidence_screen.dart';
+import 'package:talleresmoviles/screens/login_screen.dart';
+import 'package:talleresmoviles/screens/register_screen.dart';
 import 'package:talleresmoviles/views/catalogo/catalogo_screen.dart';
 import 'package:talleresmoviles/views/ciclo_vida/ciclo_vida_screen.dart';
 import 'package:talleresmoviles/views/perfil/perfil_screen.dart';
@@ -22,6 +24,27 @@ final GoRouter appRouter = GoRouter(
       path: '/',
       name: 'home',
       builder: (context, state) => const HomeScreen(),
+    ),
+
+    // Login
+    GoRoute(
+      path: '/login',
+      name: 'login',
+      builder: (context, state) => const LoginScreen(),
+    ),
+
+    // Register
+    GoRoute(
+      path: '/register',
+      name: 'register',
+      builder: (context, state) => const RegisterScreen(),
+    ),
+
+    // Evidence
+    GoRoute(
+      path: '/evidence',
+      name: 'evidence',
+      builder: (context, state) => const EvidenceScreen(),
     ),
 
     // Perfil principal
@@ -70,12 +93,15 @@ final GoRouter appRouter = GoRouter(
 
     // Ciclo de vida
     GoRoute(
-      path: '/ciclo-vida', // ruta oficial
+      path: '/ciclo-vida',
       name: 'cicloVida',
       builder: (context, state) => const CicloVidaScreen(),
     ),
+    GoRoute(
+      path: '/ciclo_vida',
+      redirect: (context, state) => '/ciclo-vida',
+    ),
 
-    GoRoute(path: '/ciclo_vida', redirect: (context, state) => '/ciclo-vida'),
     // Future Demo
     GoRoute(
       path: '/future',
@@ -96,8 +122,8 @@ final GoRouter appRouter = GoRouter(
       name: 'isolate',
       builder: (context, state) => const IsolateScreen(),
     ),
+
     // Razas de gatos (API HTTP)
-    // ...
     GoRoute(
       path: '/cat',
       name: 'catList',
