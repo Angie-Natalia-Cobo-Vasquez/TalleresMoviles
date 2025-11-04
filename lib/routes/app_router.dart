@@ -5,9 +5,13 @@ import 'package:talleresmoviles/screens/evidence_screen.dart';
 import 'package:talleresmoviles/screens/login_screen.dart';
 import 'package:talleresmoviles/screens/register_screen.dart';
 import 'package:talleresmoviles/views/catalogo/catalogo_screen.dart';
+import 'package:talleresmoviles/views/categoria_fb/categoria_fb_form_view.dart';
+import 'package:talleresmoviles/views/categoria_fb/categoria_fb_list_view.dart';
 import 'package:talleresmoviles/views/ciclo_vida/ciclo_vida_screen.dart';
 import 'package:talleresmoviles/views/perfil/perfil_screen.dart';
 import 'package:talleresmoviles/views/perfil/perfil_detalle_screen.dart';
+import 'package:talleresmoviles/views/universidades_fb/universidades_fb_form_view.dart';
+import 'package:talleresmoviles/views/universidades_fb/universidades_fb_list_view.dart';
 import '../views/home/home_screen.dart';
 import 'package:talleresmoviles/views/cursos/cursos_screen.dart';
 import 'package:talleresmoviles/views/eventos/eventos_screen.dart';
@@ -97,10 +101,7 @@ final GoRouter appRouter = GoRouter(
       name: 'cicloVida',
       builder: (context, state) => const CicloVidaScreen(),
     ),
-    GoRoute(
-      path: '/ciclo_vida',
-      redirect: (context, state) => '/ciclo-vida',
-    ),
+    GoRoute(path: '/ciclo_vida', redirect: (context, state) => '/ciclo-vida'),
 
     // Future Demo
     GoRoute(
@@ -140,6 +141,46 @@ final GoRouter appRouter = GoRouter(
         return const Scaffold(
           body: Center(child: Text('No se pudo cargar el detalle del gato')),
         );
+      },
+    ),
+
+    // Rutas para el manejo de Categorías (CRUD)
+    GoRoute(
+      path: '/categoriasFirebase',
+      name: 'categoriasFirebase',
+      builder: (_, __) => const CategoriaFbListView(),
+    ),
+    GoRoute(
+      path: '/categoriasfb/create',
+      name: 'categoriasfb.create',
+      builder: (context, state) => const CategoriaFbFormView(),
+    ),
+    GoRoute(
+      path: '/categoriasfb/edit/:id',
+      name: 'categorias.edit',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return CategoriaFbFormView(id: id);
+      },
+    ),
+
+        // Rutas para el manejo de Universidades (CRUD)
+    GoRoute(
+      path: '/universidadesFirebase',
+      name: 'universidadesFirebase',
+      builder: (_, __) => const UniversidadesFbListView(),
+    ),
+    GoRoute(
+      path: '/universidadesfb/create',
+      name: 'universidadesfb.create',
+      builder: (context, state) => const UniversidadesFbFormView(),
+    ),
+    GoRoute(
+      path: '/universidadesfb/edit/:id',
+      name: 'universidades.edit',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return UniversidadesFbFormView(id: id);
       },
     ),
   ],
