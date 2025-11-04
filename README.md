@@ -1,194 +1,208 @@
-# 🔐 Taller 2 – Autenticación JWT en Flutter
+# 🔥 Taller 3 – Integración con Firebase Firestore en Flutter
 
 **Autora:** Angie Natalia Cobo Vásquez  
 **Código:** 230222011  
 **Repositorio:** [https://github.com/Angie-Natalia-Cobo-Vasquez/TalleresMoviles](https://github.com/Angie-Natalia-Cobo-Vasquez/TalleresMoviles)  
 **Materia:** Desarrollo Móvil - 7° Semestre  
-**Institución:** Unidad Central del Valle (UCEVA)  
-**📅 Fecha:** Octubre 2025  
+**Institución:** Unidad Central del Valle del Cauca (UCEVA)  
+**📅 Fecha:** Noviembre 2025  
 
 ---
 
-## 🚀 Módulo: Autenticación JWT con Manejo de Estado y Almacenamiento Seguro
+## 🚀 Módulo: Integración con Firebase Firestore
 
-Este taller corresponde al **Taller 2**, enfocado en la **implementación de autenticación JWT**, **manejo de estados**, **persistencia local** y **buenas prácticas de arquitectura en Flutter**.
+Este taller corresponde al **Taller 3**, enfocado en la **integración de Firebase Firestore** dentro de una aplicación Flutter para realizar operaciones **CRUD (Crear, Leer, Actualizar, Eliminar)** sobre una colección llamada `universidades`.
 
 ---
 
 ## 🎯 Objetivo del Taller
 
-Desarrollar un módulo que permita:
+Implementar un módulo que permita:
 
-1. 🔑 **Realizar login JWT** contra un backend (propio o API pública).  
-2. ⚙️ Implementar **manejo de estados** (cargando / éxito / error).  
-3. 🧩 Aplicar **separación lógica por servicios** y buenas prácticas de arquitectura.  
-4. 💾 Guardar información de usuario en `shared_preferences` (no sensible).  
-5. 🔐 Guardar tokens JWT en `flutter_secure_storage` (información sensible).  
-6. 🖥️ Crear una vista de evidencia que muestre los datos almacenados localmente.
+1. 🔗 **Conectarse a Firebase Firestore** desde Flutter.  
+2. 🏫 **Gestionar una colección llamada `universidades`** con los campos: nit, nombre, dirección, teléfono y página web.  
+3. ✏️ **Realizar operaciones CRUD completas** con actualización en tiempo real.  
+4. 🧱 **Separar el código por capas** (modelo, servicio, provider, vista).  
+5. 🧩 Aplicar el **flujo GitFlow** para el control de versiones y desarrollo colaborativo.
 
 ---
 
-## 🧱 Arquitectura y Flujo del Proyecto
+## 🧱 Arquitectura del Proyecto
 
 ```
 lib/
-├── models/                # Modelos de datos (Usuario, LoginResponse, etc.)
-├── services/              # Lógica de negocio y conexión API (AuthService, ApiClient)
-├── providers/             # Manejo de estado (Provider)
-├── views/                 # Vistas de UI (LoginScreen, EvidenciaScreen)
-└── main.dart              # Punto de entrada del proyecto
+├── models/                    # Modelos de datos (UniversidadesFb)
+├── services/                  # Lógica de Firebase (UniversidadesService)
+├── providers/                 # Manejo de estado
+├── views/                     # Interfaz de usuario (ListView, FormView)
+└── main.dart                  # Punto de entrada con inicialización de Firebase
 ```
 
 ---
 
-## 🔗 Autenticación JWT
+## 🔧 Configuración Inicial de Firebase
 
-### ✅ Opción Implementada
-Se usó la **API pública de Parking Visiontic**, con los endpoints documentados en Swagger:
+1. Proyecto creado en **Firebase Console**:  
+   **ID:** `electivagrupo2-37aad`  
+   **Ubicación:** `nam5 (United States)`  
+   **Modo:** Prueba (30 días)
 
-📄 [https://parking.visiontic.com.co/api/documentation](https://parking.visiontic.com.co/api/documentation)
+2. Inicialización en `main.dart`:
 
-**Endpoint principal (login):**
-```
-POST https://parking.visiontic.com.co/api/login
-```
-
-### 📥 Flujo del Login
-
-1. El usuario ingresa sus credenciales.  
-2. El sistema realiza la petición HTTP al endpoint de login.  
-3. La respuesta contiene un token JWT, almacenado de forma segura.  
-4. Se guarda información del usuario (nombre, correo) en `shared_preferences`.  
-5. Se redirige a la vista de evidencia con los datos persistidos.
-
----
-
-## 💾 Almacenamiento Local
-
-| Tipo | Herramienta | Datos | Descripción |
-|------|--------------|-------|--------------|
-| No sensible | shared_preferences | nombre, email, tema | Persistencia básica |
-| Sensible | flutter_secure_storage | access_token, refresh_token | Seguridad de credenciales |
-
----
-
-## 🧩 Vista de Evidencia
-
-### Funcionalidades:
-- Mostrar nombre y correo (desde `shared_preferences`).  
-- Indicar si hay token almacenado (`flutter_secure_storage`).  
-- Botón **“Cerrar sesión”** que borra los datos guardados.  
-
-📸 **Capturas de evidencia** *(se agregarán posteriormente)*
-
----
-
-## ⚙️ Flujo de Trabajo con GitFlow
-
-| Rama | Propósito |
-|------|------------|
-| `main` | Versión estable del proyecto |
-| `dev` | Rama base de desarrollo |
-| `feature/taller_jwt` | Implementación del taller JWT |
-
-### 🔄 Proceso
-1. Crear rama `feature/taller_jwt` desde `dev`.  
-2. Implementar autenticación JWT y vista de evidencia.  
-3. Abrir PR `feature/taller_jwt → dev`.  
-4. Revisar, aprobar y hacer merge a `dev` y luego a `main`.
-
----
-
-## 🧠 Manejo de Estados
-
-Se implementó el patrón **Provider**, gestionando tres estados principales:
-
-- `loading`: cuando se realiza la petición al servidor  
-- `success`: cuando la autenticación es correcta  
-- `error`: cuando ocurre un fallo (credenciales o conexión)
-
----
-
-## 🧾 Ejemplo de Configuración
-
-### Dependencias principales
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
-  http: ^1.1.0
-  provider: ^6.0.5
-  shared_preferences: ^2.2.2
-  flutter_secure_storage: ^9.0.0
-```
-
-### Lógica básica de login
 ```dart
-final response = await http.post(
-  Uri.parse("https://parking.visiontic.com.co/api/login"),
-  body: {"email": email, "password": password},
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
+}
+```
+
+3. Paquetes instalados:
+
+```bash
+flutter pub add firebase_core cloud_firestore
+flutterfire configure
+flutter build apk --debug
+```
+
+---
+
+## 🧩 Modelo de Datos – UniversidadesFb
+
+```dart
+class UniversidadesFb {
+  final String id;
+  final String nit;
+  final String nombre;
+  final String direccion;
+  final String telefono;
+  final String paginaWeb;
+}
+```
+
+**Campos implementados:**
+| Campo | Tipo | Descripción |
+|--------|------|-------------|
+| nit | String | Identificación tributaria |
+| nombre | String | Nombre de la universidad |
+| direccion | String | Dirección física |
+| telefono | String | Número de contacto |
+| pagina_web | String | URL del sitio web |
+
+---
+
+## ⚙️ Servicio Firebase – UniversidadesService
+
+```dart
+class UniversidadesService {
+  static final _ref = FirebaseFirestore.instance.collection('universidades');
+
+  static Future<void> addUniversidades(UniversidadesFb universidad);
+  static Future<List<UniversidadesFb>> getUniversidades();
+  static Future<UniversidadesFb?> getUniversidadesById(String id);
+  static Future<void> updateUniversidades(UniversidadesFb universidad);
+  static Future<void> deleteUniversidades(String id);
+  static Stream<List<UniversidadesFb>> watchUniversidades();
+}
+```
+
+Permite realizar todas las operaciones CRUD, además de escuchar cambios en tiempo real con Streams.
+
+---
+
+## 🖥️ Interfaz de Usuario
+
+- **Lista principal:** `StreamBuilder` con actualización en tiempo real.  
+- **Formulario:** creación y edición de universidades con validaciones.  
+- **Diseño responsive:** adaptación a pantallas grandes y pequeñas.  
+- **Validaciones:** campos obligatorios y formato de URL.  
+
+---
+
+## 🧭 Navegación y Rutas
+
+Configuración en `app_router.dart`:
+
+```dart
+GoRoute(
+  path: '/universidadesfb',
+  name: 'universidadesfb',
+  builder: (...) => const UniversidadesFbListView(),
+),
+GoRoute(
+  path: '/universidadesfb/create',
+  name: 'universidadesfb.create',
+  builder: (...) => const UniversidadesFbFormView(),
+),
+GoRoute(
+  path: '/universidadesfb/edit/:id',
+  name: 'universidadesfb.edit',
+  builder: (context, state) {
+    final id = state.pathParameters['id']!;
+    return UniversidadesFbFormView(id: id);
+  },
 );
 ```
 
----
+Integración en el menú (`custom_drawer.dart`):
 
-## 🧪 Evidencias del Taller
-
-📄 Se entregó un **PDF** con capturas que muestran:
-- El consumo exitoso del endpoint de login.  
-- Los datos almacenados localmente (`shared_preferences` y `secure_storage`).  
-- La funcionalidad de cierre de sesión.  
-
----
-
-## 🧱 Tecnologías Utilizadas
-- **Flutter SDK:** 3.10.0+  
-- **Dart:** 3.10.0+  
-- **Provider (estado)**  
-- **HTTP Package (API REST)**  
-- **shared_preferences / flutter_secure_storage**  
-- **Material Design 3**  
+```dart
+ListTile(
+  leading: const Icon(Icons.school),
+  title: const Text('Universidades Firebase'),
+  onTap: () => context.pushNamed('universidadesfb'),
+)
+```
 
 ---
 
-## 🧩 Release Notes – Taller JWT
+## 🔄 Flujo de Trabajo con GitFlow
 
-### ✨ Novedades
-- Implementación completa de autenticación JWT.  
-- Manejo de estado con Provider.  
-- Persistencia local de datos y tokens.  
-- Vista de evidencia funcional y validada.  
+| Rama | Propósito |
+|------|------------|
+| `main` | Versión estable |
+| `dev` | Rama base de desarrollo |
+| `feature/taller_firebase_universidades` | Desarrollo del módulo Firebase |
 
-### 🐛 Correcciones
-- Ajuste de dependencias y estructura modular del proyecto.  
-- Corrección en manejo de errores y estados del login.
-
-### ✅ Estado
-- **Versión probada y funcional.**  
-- **Cumple con los requisitos del Taller 2.**
+**Proceso:**
+1. Crear rama `feature/taller_firebase_universidades` desde `dev`.  
+2. Implementar el módulo completo.  
+3. Crear PR `feature/taller_firebase_universidades → dev`.  
+4. Hacer merge a `main` tras revisión.
 
 ---
 
-## 📸 Capturas del Proyecto
+## 🧪 Pruebas y Validación
 
-### Versiones
+- ✅ Sincronización en tiempo real con Firestore.  
+- ✅ Validación de campos vacíos y formato URL.  
+- ✅ Creación, edición y eliminación de registros.  
+- ✅ Verificación de actualización instantánea en la lista principal.  
 
-![Custom Drawer](assets/capturas/CapturaJ1.png)
-![Registro](assets/capturas/CapturaJ2.png)
-![Registro exitoso](assets/capturas/CapturaJ22.png)
-![Login](assets/capturas/CapturaJ3.png)
-![Evidencias](assets/capturas/CapturaJ5.png)
 ---
 
+## 📸 Evidencias del Taller
+
+Incluyen capturas de:
+- Configuración en Firebase Console.  
+- Colección `universidades` con documentos reales.  
+- Aplicación móvil mostrando listado, creación y edición.  
+- Flujo completo de CRUD y conexión estable con Firestore.
+
+---
 
 ## 🧠 Conclusión
 
-Con este taller se consolidaron los conocimientos sobre **autenticación JWT en Flutter**, **gestión de estado**, **seguridad local** y **flujo de trabajo con GitFlow**, aplicando prácticas de desarrollo profesional y distribución organizada del código.
+Este taller permitió comprender y aplicar la integración entre **Flutter y Firebase Firestore**, reforzando conceptos de **sincronización en tiempo real**, **estructura modular** y **control de versiones con GitFlow**.  
+El resultado es un módulo funcional, escalable y con validaciones efectivas para la gestión de datos en la nube.
 
 ---
 
 ## 📦 Versión Actual
-**Versión:** `2.0.0`  
-**Rama:** `feature/taller_jwt`  
+
+**Versión:** `3.0.0`  
+**Rama:** `feature/taller_firebase_universidades`  
 **Estado:** ✅ Finalizado y probado  
-**Última actualización:** Octubre 2025
+**Última actualización:** Noviembre 2025  
