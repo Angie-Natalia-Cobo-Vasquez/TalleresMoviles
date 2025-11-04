@@ -144,9 +144,20 @@ class CustomDrawer extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
+
+          ListTile(
+            leading: const Icon(Icons.cloud),
+            title: const Text('Categorías Firebase'),
+            onTap: () => context.pushNamed('categoriasFirebase'),
+          ),
+
+          ListTile(
+            leading: const Icon(Icons.cloud),
+            title: const Text('Universidades Firebase'),
+            onTap: () => context.pushNamed('universidadesFirebase'),
+          ),
         ],
       ),
     );
   }
 }
-
